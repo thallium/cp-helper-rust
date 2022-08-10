@@ -31,11 +31,11 @@ fn handle_request(req: &mut TcpStream, counter: &mut u32) {
         };
         let path = Path::new(&dir);
         create_dir_all(path).ok();
+        File::create(format!("{dir}/main.cpp")).unwrap();
         for (i, test) in tests.into_iter().enumerate() {
             let i = i + 1;
             let mut input = File::create(format!("{dir}/{i}.in")).unwrap();
             let mut output = File::create(format!("{dir}/{i}.out")).unwrap();
-            File::create(format!("{dir}/main.cpp")).unwrap();
             input.write_all(test.input.as_bytes()).ok();
             output.write_all(test.output.as_bytes()).ok();
         }
